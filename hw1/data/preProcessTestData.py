@@ -1,13 +1,13 @@
 import numpy as np
 import pickle as pc
 
-def preProcessTrainData(filename):
+def preProcessTestData(filename):
 
 # read the file in a list mailSet
 
 	mail = []
-	with open(filename, "r") as trainFile:
-		for line in trainFile:
+	with open(filename, "r") as testFile:
+		for line in testFile:
 			mail.append(line.split())
 	nMail = len(mail)
 	
@@ -32,16 +32,10 @@ def preProcessTrainData(filename):
 	for n in range(nMail):
 		mail.append(old[n][1:])
 	
-# create a vocabulary
+# import the (training set) vocabulary
 	
-	voc = []
-	for i in range(nMail):
-		wordIndex = [2*k for k in range(len(mail[i])/2)]
-		for j in wordIndex: 
-			word = mail[i][j]
-			voc.append(word)
-	voc = list(set(voc))
-	voc.sort()
+	with open('trainVoc', 'rb') as trainVocFile:
+		voc = pc.load(trainVocFile)
 	nVoc = len(voc)
 
 # re-arrange the data as number of occurences of words in voc
@@ -66,29 +60,24 @@ def preProcessTrainData(filename):
 			else:
 				wordCount.append(mailCount[i][pos])
 		mail.append(wordCount)
-	#	
-	print mailCount[0][mailWord[0].index('enron')]
-	print mail[0][voc.index('enron')]
 
 	return voc, mail, nHam, nSpam, nVoc
 
-# preProcess 'train'
+# preProcess 'test'
 
-voc, mail, nHam, nSpam, nVoc = preProcessTrainData('train')
+voc, mail, nHam, nSpam, nVoc = preProcessTestData('test')
 
-#print mail[:][voc.index('enron')]
+# write 'testVoc'
 
-# write 'trainVoc'
+with open('testVoc', 'wb') as testVocFile:
+    pc.dump(voc, testVocFile)
 
-with open('trainVoc', 'wb') as trainVocFile:
-    pc.dump(voc, trainVocFile)
+# write 'testMail'
 
-# write 'trainMail'
+with open('testMail', 'wb') as testMailFile:
+    pc.dump(mail, testMailFile)
 
-with open('trainMail', 'wb') as trainMailFile:
-    pc.dump(mail, trainMailFile)
+# write 'testHSV'
 
-# write 'trainHSV'
-
-with open('trainHSV', 'wb') as trainHSVFile:
-    pc.dump([nHam, nSpam, nVoc], trainHSVFile)
+with open('testHSV', 'wb') as testHSVFile:
+    pc.dump([nHam, nSpam, nVoc], testHSVFile)

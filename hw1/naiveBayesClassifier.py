@@ -24,11 +24,12 @@ pHam = trNham / trNmail
 
 print pSpam
 
-#### pGS, pGH
+# compute the conditional probabilities pGivenSpam = P(w_i|spam) and pGivenHam = P(w_i|ham)
 
 pGivenSpam = np.zeros((nVoc))
 pGivenHam = np.zeros((nVoc))
 nTot = np.sum(np.sum(trMail))
+m = 1
 for n in range(nVoc):
 	ncS = 0
 	ncH = 0 
@@ -36,10 +37,10 @@ for n in range(nVoc):
 		ncS += trSpam[k][n]
 	for k in range(trNham):
 		ncH += trHam[k][n]
-	pGivenSpam[n] = (1 + ncS) / (nTot + nVoc) #
-	pGivenHam[n] = (1 + ncH) / (nTot + nVoc) #
+	pGivenSpam[n] = (m + ncS) / (nTot + nVoc*m)
+	pGivenHam[n] = (m + ncH) / (nTot + nVoc*m)
 
-#### most likely 5
+# print the 5 most likely words given spam/ham
 
 mostLikeGivenSpamIndex = np.argsort(pGivenSpam)[-5:][::-1]
 mostLikeGivenSpam = [voc[n] for n in mostLikeGivenSpamIndex]
@@ -50,3 +51,49 @@ mostLikeGivenHamIndex = np.argsort(pGivenHam)[-5:][::-1]
 mostLikeGivenHam = [voc[n] for n in mostLikeGivenHamIndex]
 
 print mostLikeGivenHam
+
+# load the (preProcessed) test files
+
+with open('data/testMail', 'rb') as testMailFile:
+	teMail = pc.load(testMailFile)
+with open('data/testHSV', 'rb') as testHSVFile:
+	teHSV = pc.load(testHSVFile)
+teNham = teHSV[0]
+teNspam = teHSV[1]
+teHam = teMail[:teNham]
+teSpam = teMail[-teNspam:]
+
+# classify the test file and compute the accuracy of the algorithm
+
+def classify(mail):
+	
+	spam = np.log(pSpam)	
+	ham = np.log(pHam)
+	for n in range(nVoc):	
+		if mail[n] == 0:
+			spam += np.log(1-pGivenSpam[n])
+			ham += np.log(1-pGivenHam[n])
+		else:			
+			spam += np.log(pGivenSpam[n])
+			ham += np.log(pGivenHam[n])
+	if spam > ham:
+		return 1
+	else:
+		return 0
+
+def accuracy(testSpam,testHam):
+	
+	nS = len(testSpam)
+	nH = len(testHam)
+	acc = 0
+	for n in range(nS):
+		if classify(testSpam[n]) == 1:
+			acc += 1
+	for n in range(nH):
+		if classify(testHam[n]) == 0:
+			acc += 1
+
+	return (acc / (nS + nH))
+
+print accuracy(teSpam,teHam)
+
