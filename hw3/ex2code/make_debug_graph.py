@@ -57,6 +57,7 @@ def make_debug_graph():
     px2= np.sum(dist_f234, axis=(0,1))
     dist_f12 =px2[:,np.newaxis]*px1_conditioned_x2
     f12.factor = rv.Discrete(dist_f12,x2,x1)
+
     # Perform sum-product algorithm on factor graph
     # and request belief of variable node x1
     belief = inference.sum_product(fg, x3)
