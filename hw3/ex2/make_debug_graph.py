@@ -1,6 +1,7 @@
 import numpy as np 
 import networkx as nx
 from fglib import graphs, nodes, rv, inference
+from get_beliefs import *
 
 def make_debug_graph():
 
@@ -58,18 +59,21 @@ def make_debug_graph():
     dist_f12 =px2[:,np.newaxis]*px1_conditioned_x2
     f12.factor = rv.Discrete(dist_f12,x2,x1)
 
+	# message initialize 
+
+	for x in fg.nodes():
+
+
     # Perform sum-product algorithm on factor graph
     # and request belief of variable node x1
-    # belief = inference.sum_product(fg, x3)
-    
-    return (fg)
+    beliefs = inference.loopy_belief_propagation(fg, 1000, query_node=(x3,))
+    #beliefs = get_beliefs(fg)
 
-def get_beliefs(fg):
- ##TO
-	return 0
+    return beliefs
 
-fg=make_debug_graph()
-beliefs = get_beliefs(fg)
+beliefs = make_debug_graph()
+
 # Print belief of variable nodes
-print("Belief of variable nodes ")
+
+print("Belief of variable nodes")
 print(beliefs)
