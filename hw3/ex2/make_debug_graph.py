@@ -1,7 +1,10 @@
+# define the example tree-stuctured factor graph
+# compare the results of my sum-product algorithm versus the results of fglib library sum-product algorithm 
+
 import numpy as np 
 import networkx as nx
-from fglib import graphs, nodes, rv #, inference
-from get_beliefs import *
+from fglib import graphs, nodes, rv , inference
+from my_loopy_bp import *
 
 def make_debug_graph():
 
@@ -62,17 +65,19 @@ def make_debug_graph():
     # Perform sum-product algorithm on factor graph
     # and request belief of variable node x1
     
-    # Package algorithm
-    # beliefs = inference.loopy_belief_propagation(fg, 1000, query_node=(x3,))
+    # fglib sum-product algorithm
+    fglib_beliefs = inference.belief_propagation(fg, query_node=x1)
 	
-	# My algorithm    	
-    beliefs = get_beliefs(fg)
+	# my sum-product algorithm   	
+    my_beliefs = get_beliefs(fg, 3, x1)
 
-    return beliefs
+    return fglib_beliefs, my_beliefs
 
-beliefs = make_debug_graph()
+fglib_beliefs, my_beliefs = make_debug_graph()
 
 # Print belief of variable nodes
 
-print("Belief of variable nodes")
-print(beliefs)
+print("Belief of variable nodes (my algorithm):")
+print(my_beliefs)
+print("Belief of variable nodes (fglib algorithm):")
+print(fglib_beliefs)
