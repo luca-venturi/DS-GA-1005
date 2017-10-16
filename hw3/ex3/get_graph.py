@@ -33,8 +33,8 @@ def get_graph(H):
 	for f in range(N):
 		tmp = np.eye(2)
 		index = np.argwhere(H[f,:])
-		tmpx = vNodes[index[0][0]] ###
-		tmpy = vNodes[index[0][1]] ###
-		f.factor = rv.Discrete(tmp,tmpx,tmpy)
+		tmpx = vNodes[index[0][0]]
+		tmpy = vNodes[index[1][0]]
+		fNodes[f].factor = rv.Discrete(tmp,tmpx,tmpy)
 	
 	return fg
