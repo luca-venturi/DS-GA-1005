@@ -69,9 +69,9 @@ def make_debug_graph():
     fglib_beliefs = inference.belief_propagation(fg, query_node=x1)
 	
 	# my sum-product algorithm   	
-    my_beliefs = get_beliefs(fg, 3, x1)
+    my_beliefs = get_beliefs(fg, 3, [x1])
 
-    return fglib_beliefs, my_beliefs
+    return fglib_beliefs, my_beliefs[0][1]
 
 fglib_beliefs, my_beliefs = make_debug_graph()
 

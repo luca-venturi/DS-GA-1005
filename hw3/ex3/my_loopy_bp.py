@@ -33,5 +33,3 @@ def get_beliefs(fg, nIter, query_node):
 				set_message(fg,v,f,spa(fg,v,f).normalize()) # here we normalize
 	
 	return [[v,v.belief()] for v in query_node]
-
-# to be modified to take into account non-binary variables
