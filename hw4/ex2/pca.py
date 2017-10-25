@@ -42,7 +42,7 @@ to top 10 singular values of the data.
 U, s, V = np.linalg.svd(trainarr-trainarr.mean(axis=0), full_matrices=True)
 n = 10
 imgs = [V[i,:] for i in range(n)]
-plot_image_grid(imgs,"Singular vectors corresponding to top 10 singular values of the data")
+plot_image_grid(imgs,"10 top singular vectors of the data") # title changed 
 
 """
 Plot of the results of the nearest neighbour test applied 
@@ -87,4 +87,4 @@ for i in range(len(testLabels)):
 
 row_titles = ['Test','Nearest']
 col_titles = ['%d vs. %d'%(i,j) for i,j in zip(testLabels,testLabels)]
-plot_image_grid(imgs,"Image-NearestNeighbor",(28,28),len(testLabels),2,True,row_titles=row_titles,col_titles=col_titles)
+plot_image_grid(imgs,"Image-NearestNeighbor - PCA (n = "+str(n)+")",(28,28),len(testLabels),2,True,row_titles=row_titles,col_titles=col_titles) # title changed
