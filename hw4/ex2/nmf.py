@@ -50,6 +50,7 @@ for r in r_values:
 	plot_image_grid(imgs,'Rows of H - NMF (n = '+str(r)+")") # title changed
 	h = orth(h.T)
 	pTrain = np.dot(trainarr, h)
+	print(pTrain.shape)
 	pTest = np.dot(test, h)
 
 	imgs = []
@@ -62,3 +63,13 @@ for r in r_values:
 	row_titles = ['Test','Nearest']
 	col_titles = ['%d vs. %d'%(i,j) for i,j in zip(testLabels,nearestLabels)]
 	plot_image_grid(imgs,"Image-NearestNeighbor- NMF (n = "+str(r)+")",(28,28),len(testLabels),2,True,row_titles=row_titles,col_titles=col_titles) # title changed
+
+# Ex. 2.3
+
+tmp = np.arange(10)
+for d in tmp:
+	plt.plot(tmp+1,pTrain[d * 100,:],label=str(d))
+plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+plt.xlabel('principal components')
+plt.savefig('NMF 10 top components', bbox_inches='tight')
+plt.show()

@@ -72,6 +72,7 @@ def compute_nearest_neighbors(train, testImage, V) :
 
 n = 8
 U, s, V = np.linalg.svd(trainarr, full_matrices=False)
+V10 = V[0:10,:] # for 2.3
 V = V[0:n,:]
 
 test,testLabels = load_test_data(datafile)
@@ -88,3 +89,13 @@ for i in range(len(testLabels)):
 row_titles = ['Test','Nearest']
 col_titles = ['%d vs. %d'%(i,j) for i,j in zip(testLabels,testLabels)]
 plot_image_grid(imgs,"Image-NearestNeighbor - PCA (n = "+str(n)+")",(28,28),len(testLabels),2,True,row_titles=row_titles,col_titles=col_titles) # title changed
+
+# Ex. 2.3
+
+tmp = np.arange(10)
+for d in tmp:
+	plt.plot(tmp+1,np.dot(V10,trainarr[d * 100,:]),label=str(d))
+plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+plt.xlabel('principal components')
+plt.savefig('PCA 10 top components', bbox_inches='tight')
+plt.show()
