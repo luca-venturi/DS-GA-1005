@@ -25,11 +25,8 @@ plt.xticks(np.arange(32)+0.5,np.array(headers),rotation='vertical')
 plt.yticks(np.arange(32)+0.5,np.array(headers))
 plt.show()
 
-#Lets fit both the models using PCA/FA down to two dimensions. 
-
-#construct a function implementing the factor analysis which returns a vector of n_components largest 
-# variances and the corresponding components (as column vectors in a matrix). You can
-# check your work by using decomposition.FactorAnalysis from sklearn
+# Lets fit both the models using PCA/FA down to two dimensions. 
+# This is to test my implementation. sklearn is used
 
 n_components = 2
 U, s, V = np.linalg.svd(data-data.mean(axis=0))
@@ -59,6 +56,7 @@ def plot_scatter_annotate(data,labels,title):
             textcoords = 'offset points', ha = 'right', va = 'bottom',
             bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),
             arrowprops = dict(arrowstyle = '->', connectionstyle = 'arc3,rad=0'))
+    plt.savefig(title, bbox_inches='tight') # added
     plt.show()
     
 np.random.seed(1)
@@ -67,4 +65,4 @@ dset_pca = pca_comp[idxlist]
 dset_fa = fa_comp[idxlist]
 hdr_sub = [headers[k] for k in idxlist.tolist()]
 plot_scatter_annotate(dset_pca,hdr_sub,'Visualizing Principle Components from PCA')
-plot_scatter_annotate(dset_fa,hdr_sub,'Visualizing Factor Loading Matrix from Factor Analysis')
+plot_scatter_annotate(dset_fa,hdr_sub,'Visualizing Factor Loading Matrix from Factor Analysis - sklearn')
