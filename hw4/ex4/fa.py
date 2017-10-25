@@ -26,7 +26,8 @@ plt.show()
 # Lets fit both the models using PCA/FA down to two dimensions. 
 
 # Here is my implementation of FA
-# References: 'Bayesian Reasoning and Machine Learning', D. Barber, Section 21.2 
+# References: 'Bayesian Reasoning and Machine Learning', D. Barber, Section 21.2
+# Code References: https://github.com/scikit-learn/scikit-learn/blob/f3320a6f/sklearn/decomposition/factor_analysis.py#L36
 
 def FactorAnalysis(data,n_components,nIter=2000):
     
@@ -37,9 +38,9 @@ def FactorAnalysis(data,n_components,nIter=2000):
     data_variance = np.var(data, axis=0)
     # eps = 1e-12
     for _ in range(nIter):
-        std_deviations = np.sqrt(variances) # + eps
+        std_deviations = np.sqrt(variances)# + eps
         _, s, v = np.linalg.svd(data / (std_deviations * n_samples_sqrt),full_matrices=False)
-        components = v[:n_components].T * np.sqrt(s[:n_components] ** 2 - 1.) # * np.sqrt(np.maximum(s[:n_components] ** 2 - 1., 0.))
+        components = v[:n_components].T * np.sqrt(s[:n_components] ** 2 - 1.)# * np.sqrt(np.maximum(s[:n_components] ** 2 - 1., 0.))
         components = (components.T * std_deviations).T
         # variances = np.maximum(dataVariance - np.sum(components ** 2, axis=1), eps)
         variances = data_variance - np.sum(components ** 2, axis=1) 
