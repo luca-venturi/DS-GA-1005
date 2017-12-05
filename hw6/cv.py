@@ -26,12 +26,18 @@ for C in cRange:
 
 bC = max(score, key=score.get)
 print('best C = ', bC)
+_list = [bC,1.-score[bC]]
 
 # test error
 
 ssvm = OneSlackSSVM(chain, max_iter=200, C=bC)
+ssvm.fit(xTrain[:4500],yTrain[:4500])
+_list.append(1. - ssvm.score(xTest,yTest))
+with open('data_python/cv_results', 'wb') as _file:
+    pickle.dump(_list,_file)
+
 ssvm.fit(xTrain,yTrain)
-with open('data_python/learned_model', 'wb') as _file:
+with open('data_python/cv_learned_model', 'wb') as _file:
     pickle.dump(ssvm,_file)
 error = 1. - ssvm.score(xTest,yTest)
 print('test error -> ', error)   

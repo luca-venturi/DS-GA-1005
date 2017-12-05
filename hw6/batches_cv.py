@@ -3,6 +3,7 @@ import pickle
 from pystruct.models import ChainCRF
 from pystruct.learners import OneSlackSSVM
 from sklearn.model_selection import cross_val_score
+import matplotlib.pyplot as plt
 
 # load data
 
@@ -43,13 +44,17 @@ for b in bRange[:-1]:
 
 # get 4500 batch size scores 
 
+tmp = bRange[-1]
+with open ('data_python/cv_results', 'rb') as _file:
+    [bC[tmp],error['train',tmp],error['test',tmp]] = pickle.load(_file)
+
 # plot
 
 plt.title('CV and test error vs. training set size')
 plt.xlabel('training set size')
 plt.ylabel('misclassification error')
 plt.plot(bRange,[error['train',b] for b in bRange],label='cv')
-plt.plot(bRange,[error['test',b] for b in bRange],label='cv')
+plt.plot(bRange,[error['test',b] for b in bRange],label='test')
 plt.legend()
 plt.show() #
 plt.savefig('cv_test_error', bbox_inches='tight')

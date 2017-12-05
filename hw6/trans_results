@@ -1,0 +1,17 @@
+Chosen classes:  ['verb' 'determiner' 'number']
+Transition weights:
+verb  ->  verb  :  0.146190443909
+verb  ->  determiner  :  0.0
+verb  ->  number  :  -0.859828624365
+determiner  ->  verb  :  1.03950540797
+determiner  ->  determiner  :  0.0
+determiner  ->  number  :  -0.0421709239399
+number  ->  verb  :  -0.558470696998
+number  ->  determiner  :  -0.0669569332649
+number  ->  number  :  -0.255108750756
+Most relevant features for tag  verb  :
+['Suffix: ed', 'Suffix: ng', 'Prefix: du', 'Prefix: ha', 'Prefix: is', 'Suffix: id', 'Prefix: th', 'Suffix: lf', 'Prefix: wh', 'Prefix: be']
+Most relevant features for tag  determiner  :
+['Suffix: he', 'Prefix: an', 'Suffix: ch', 'Suffix: a', 'Prefix: a', 'Suffix: no', 'Prefix: th', 'Suffix: nd', 'Suffix: is', 'Prefix: he']
+Most relevant features for tag  number  :
+['Suffix: ee', 'Prefix: 19', 'Suffix: wo', 'Suffix: ne', 'Suffix: ix', 'Suffix: 00', 'Prefix: 2-', 'Prefix: 10', 'Prefix: 11', 'Prefix: 18']
