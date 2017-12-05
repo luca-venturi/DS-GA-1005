@@ -32,6 +32,6 @@ print('best C = ', bC)
 ssvm = OneSlackSSVM(chain, max_iter=200, C=bC)
 ssvm.fit(xTrain,yTrain)
 with open('data_python/learned_model', 'wb') as _file:
-    pickle.dump(testList, ssvm)
+    pickle.dump(ssvm,_file)
 error = 1. - ssvm.score(xTest,yTest)
 print('test error -> ', error)   
