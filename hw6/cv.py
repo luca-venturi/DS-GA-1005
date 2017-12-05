@@ -19,13 +19,13 @@ cRange = [2**(i-K) for i in range(2*K+1)]
 score = {}
 
 for C in cRange:
-	ssvm = OneSlackSSVM(chain, max_iter=200, C=1)
+	ssvm = OneSlackSSVM(chain, max_iter=200, C=C)
 	ssvm.fit(xTrain[:450],yTrain[:450])
 	score[C] = ssvm.score(xTrain[-50:],yTrain[-50:])
 	print( 'C = ', C, ' -> ', score[C])
 
 bC = min(score, key=score.get)
-print(bC)
+print('best C = ', bC)
 
 # test error
 
