@@ -15,7 +15,7 @@ w = ssvm.w
 k = 10
 tag = np.array(['verb','noun','adjective','adverb','preposition','pronoun',
 	'determiner','number','punctuation','other'])
-cl = random.sample(range(10),3)
+cl = random.sample(range(k),3)
 cl.sort()
 print('Chosen classes: ',tag[cl])
 trans = w[-k**2:]

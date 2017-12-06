@@ -32,7 +32,7 @@ for b in bRange[:-1]:
 		ssvm.fit(xTrain[:b],yTrain[:b])
 		score[C] = ssvm.score(xVal,yVal)
 		print('b = ', b, 'C = ', C, ' -> ', score[C])
-	bC[b] = min(score, key=score.get)
+	bC[b] = max(score, key=score.get)
 	error['train',b] = 1. - score[bC[b]]
 	
 # test error
@@ -56,5 +56,5 @@ plt.ylabel('misclassification error')
 plt.plot(bRange,[error['train',b] for b in bRange],label='cv')
 plt.plot(bRange,[error['test',b] for b in bRange],label='test')
 plt.legend()
-plt.show() #
 plt.savefig('cv_test_error', bbox_inches='tight')
+plt.show() #
